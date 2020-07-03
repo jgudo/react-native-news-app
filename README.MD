@@ -1,2 +1,2 @@
-#News App using React Native
+# News App using React Native
 Created with Expo
