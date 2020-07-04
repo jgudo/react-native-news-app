@@ -25,9 +25,6 @@ function App() {
           <Stack.Screen 
               name="Home" 
               component={Home}
-              options={{
-                screen: 'News'
-              }}
           />
           <Stack.Screen name="About" component={About}/>
           <Stack.Screen name="Search" component={Search}/>
