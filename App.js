@@ -24,6 +24,9 @@ function App() {
           <Stack.Screen 
               name="Home" 
               component={Home}
+              options={{
+                screen: 'News'
+              }}
           />
           <Stack.Screen name="About" component={About}/>
         </Stack.Navigator>
@@ -33,5 +36,3 @@ function App() {
 }
 
 export default App;
-
-// 16d923d6e2fd4ef48860cab9bc42dea3

@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Item } from 'react-navigation-header-buttons';
-import News from './News';
+import News from './news';
 import HeaderButtonIcon from '../icons/HeaderButton';
 
 const Tab = createStackNavigator();
