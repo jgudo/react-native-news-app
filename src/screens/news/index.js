@@ -1,15 +1,22 @@
 import React from 'react';
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl } from 'react-native';
 import { NEWS_API } from 'react-native-dotenv';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NewsItem from './NewsItem';
 
 class News extends React.Component {
   state = {
-    news: []
+    news: [],
+    loading: false,
+    isRefreshing: false
   };
 
   componentDidMount() {
+    this.setState({ loading: true });
+    this.fetchNews(); 
+  }
+
+  fetchNews = async() => {
     const url = new URL('https://newsapi.org/v2/top-headlines');
     const params = {
       country: 'us',
@@ -17,14 +24,25 @@ class News extends React.Component {
     }
     Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
 
-    fetch(url)
-      .then(response => response.json())
-      .then((data) => {
-        this.setState({ news: data.articles });
-        console.log(data);
-        alert(JSON.stringify(data));
-      })
-      .catch(e => alert(e)); 
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      this.setState({ 
+        news: data.articles,
+        loading: false,
+        isRefreshing: false
+      });
+      console.log(data);
+      // alert(JSON.stringify(data));
+    } catch(e) {
+      alert(e);
+    }
+  }
+
+  onRefresh = () => {
+    this.setState({ isRefreshing: true });
+    this.fetchNews();
   }
 
   render() {
@@ -36,6 +54,13 @@ class News extends React.Component {
           extraData={this.state.news}
           renderItem={({ item }) => <NewsItem news={item}/>}
           keyExtractor={(news) => news.url}
+          refreshControl={<RefreshControl 
+              refreshing={this.state.isRefreshing}
+              onRefresh={this.onRefresh}
+              tintColor="#0034c2"
+              colors={['#0034c2']}
+              progressBackgroundColor="#fff"
+          />}
         />
       </SafeAreaView>
     );

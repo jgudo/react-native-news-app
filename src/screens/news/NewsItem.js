@@ -6,11 +6,14 @@ const NewsItem = ({ news }) => {
     return (
         <TouchableOpacity onPress={() => alert('fgfdg')}>
             <View style={styles.container}>
-                <Image source={{ uri: news.urlToImage }} style={styles.thumbnail}/>
                 <View style={styles.titleContainer}>
-                    <Text style={styles.title}>{news.title}</Text>
-                    <Text>Source:</Text>
+                    <Text numberOfLines={3} style={styles.title}>{news.title}</Text>
+                    <View style={styles.sourceContainer}>
+                        <Text style={styles.source}>Source:</Text>
+                        <Text style={styles.sourceName}> {news.source.name}</Text>
+                    </View>
                 </View>
+                <Image source={{ uri: news.urlToImage }} style={styles.thumbnail}/>
             </View>
         </TouchableOpacity>
     )
@@ -36,12 +39,26 @@ const styles = StyleSheet.create({
     },
     thumbnail: {
         width: 100,
-        height: 100
+        height: 100,
+        backgroundColor: '#f6f6f6'
     },
     title: {
         fontWeight: 'bold',
         flex: 1,
-        flexWrap: 'wrap'
+        flexWrap: 'wrap',
+        color: '#0034c2'
+    },
+    sourceContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    source: {
+        color: '#bababa',
+        fontSize: 10
+    }, 
+    sourceName: {
+        fontSize: 12,
+        color: '#a1a1a1'
     },
     titleContainer: {
         flexDirection: 'column',
