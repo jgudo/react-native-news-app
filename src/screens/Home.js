@@ -13,6 +13,7 @@ const Home = ({ navigation }) => {
       headerRight: () => (
         <HeaderButtonIcon>
           <Item title="about" iconName="md-information-circle-outline" onPress={() => navigation.navigate('About')} />
+          <Item title="search" iconName="md-search" onPress={() => navigation.navigate('Search')} />
         </HeaderButtonIcon>
       ) 
     })
