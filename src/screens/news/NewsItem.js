@@ -1,15 +1,18 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const NewsItem = ({ news }) => {
     return (
-        <View style={styles.container}>
-            <Image source={{ uri: news.urlToImage }} style={styles.thumbnail}/>
-            <View style={styles.titleContainer}>
-                <Text style={styles.title}>{news.title}</Text>
-                <Text>Source:</Text>
+        <TouchableOpacity onPress={() => alert('fgfdg')}>
+            <View style={styles.container}>
+                <Image source={{ uri: news.urlToImage }} style={styles.thumbnail}/>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>{news.title}</Text>
+                    <Text>Source:</Text>
+                </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 };
 
@@ -17,7 +20,7 @@ const win = Dimensions.get('window');
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        marginVertical: 10,
+        marginVertical: 5,
         marginHorizontal: 10,
         backgroundColor: '#fff',
         borderRadius: 7,
@@ -27,10 +30,9 @@ const styles = StyleSheet.create({
             width: 0,
             height: 4,
         },
-        shadowOpacity: 0.2,
+        shadowOpacity: 0.1,
         shadowRadius: 5,
-
-        elevation: 9,
+        elevation: 4,
     },
     thumbnail: {
         width: 100,
