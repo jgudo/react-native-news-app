@@ -68,7 +68,7 @@ const Home = ({ navigation }) => {
             renderLabel={tabBarRender}
             getLabelText={({route: {title}}) => title}
             indicatorStyle={{ backgroundColor: '#ffa500' }}
-            style={{ backgroundColor: '#fff' }}
+            // style={{ backgroundColor: '#fff' }}
           />
         )}
       />

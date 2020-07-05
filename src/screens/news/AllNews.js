@@ -1,78 +1,35 @@
 import React from 'react';
 import { FlatList, StyleSheet, RefreshControl, ActivityIndicator } from 'react-native';
-import { NEWS_API } from 'react-native-dotenv';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import useNewsData from '../../hooks/useNewsData';
 import NewsItem from './NewsItem';
 
-class AllNews extends React.Component {
-    state = {
-        news: [],
-        loading: false,
-        isRefreshing: false
-    };
+const AllNews = () => {
+    const { news, loading, onRefresh, isRefreshing } = useNewsData('all', { q: 'covid' });
 
-    componentDidMount() {
-        this.setState({ loading: true });
-        this.fetchNews(); 
-        console.log('ALL NEWS MOUNTED')
-    }
-
-    fetchNews = async() => {
-        const url = new URL('https://newsapi.org/v2/everything');
-        const params = {
-            q: 'covid',
-            apiKey: NEWS_API
-        }
-        Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-
-        try {
-            const res = await fetch(url);
-            const data = await res.json();
-
-            this.setState({ 
-                news: data.articles,
-                loading: false,
-                isRefreshing: false
-            });
-            console.log(data);
-            // alert(JSON.stringify(data));
-        } catch(e) {
-            alert(e);
-        }
-    }
-
-    onRefresh = () => {
-        this.setState({ isRefreshing: true });
-        this.fetchNews();
-    }
-
-    render() {
-        const { loading } = this.state;
-        
-        return (
+    return (
         <SafeAreaView style={styles.container}>
-            {loading ? (
-                <ActivityIndicator size="large" color="#0034c2" />
-            ) : (
-                <FlatList 
-                    data={this.state.news} 
-                    initialNumToRender={10}
-                    extraData={this.state.news}
-                    renderItem={({ item }) => <NewsItem news={item}/>}
-                    keyExtractor={(news) => news.url}
-                    refreshControl={<RefreshControl 
-                        refreshing={this.state.isRefreshing}
-                        onRefresh={this.onRefresh}
-                        tintColor="#0034c2"
-                        colors={['#0034c2']}
-                        progressBackgroundColor="#fff"
-                    />}
-                />
-            )}
+        {loading ? (
+            <ActivityIndicator size="large" color="#0034c2" />
+        ) : (
+            <FlatList 
+            data={news} 
+            initialNumToRender={10}
+            extraData={news}
+            renderItem={({ item }) => <NewsItem news={item}/>}
+            keyExtractor={(news) => news.url}
+            refreshControl={<RefreshControl 
+                refreshing={isRefreshing}
+                onRefresh={onRefresh}
+                tintColor="#0034c2"
+                colors={['#0034c2']}
+                progressBackgroundColor="#fff"
+            />}
+            />
+        )}
         </SafeAreaView>
-        );
-    }
-}
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
