@@ -3,6 +3,7 @@ import { fetchTopHeadlines, fetchAllNews } from '../services/api';
 
 const useNewsData = (endpoint, params) => {
     const [news, setNews] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
     const [isRefreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -13,7 +14,7 @@ const useNewsData = (endpoint, params) => {
         }   
     }, []);
 
-    const fetchNews = async() => {
+    const fetchNews = async(page = 1) => {
         setLoading(true);
         setError('');
         let data = null;
@@ -21,10 +22,10 @@ const useNewsData = (endpoint, params) => {
         try {
             switch (endpoint) {
                 case 'top-headlines':
-                    data = await fetchTopHeadlines(params);
+                    data = await fetchTopHeadlines({ ...params, page });
                     break;
                 case 'all':
-                    data = await fetchAllNews(params);
+                    data = await fetchAllNews({ ...params, page});
                     break;
                 default:
                     throw new Error('Unexpected endpoint entry');
@@ -33,9 +34,12 @@ const useNewsData = (endpoint, params) => {
             setError(e.message);
             console.dir(e);
         }
+
+        if (data.articles) {
+            console.log(data);
+            setNews([...news, ...data.articles]);
+        }
         
-        console.log(data);
-        setNews(data.articles);
         setLoading(false);
         setRefreshing(false);
     };
@@ -45,7 +49,12 @@ const useNewsData = (endpoint, params) => {
         fetchNews();
     }
 
-    return { news, loading, setLoading, onRefresh, isRefreshing, error, fetchNews}
+    const fetchMoreNews = () => {
+        fetchNews(currentPage + 1);
+        setCurrentPage(currentPage + 1);
+    }
+
+    return { news, loading, setLoading, onRefresh, isRefreshing, error, fetchNews, currentPage, fetchMoreNews}
 };
 
 export default useNewsData;

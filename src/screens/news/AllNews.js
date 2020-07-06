@@ -1,52 +1,33 @@
-import React from 'react';
-import { FlatList, StyleSheet, RefreshControl, ActivityIndicator } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect } from 'react';
+import { FlatList, RefreshControl, Button } from 'react-native';
 import useNewsData from '../../hooks/useNewsData';
+import NewsList from './NewsList';
 import NewsItem from './NewsItem';
-import Error from '../../components/Error';
 
 const AllNews = () => {
-    const { 
-        news, 
-        loading, 
-        onRefresh, 
-        isRefreshing,
-        error,
-        fetchNews 
-    } = useNewsData('all', { q: 'covid' });
+    const data = useNewsData('all', { q: 'covid' });
+
+    useEffect(() => console.log('ALL', data),[])
 
     return (
-        <SafeAreaView style={styles.container}>
-        {loading && !isRefreshing ? (
-            <ActivityIndicator size="large" color="#0034c2" />
-        ) : error ? (
-            <Error onRefresh={fetchNews} error={error} />
-        ) : (
+        <NewsList {...data}>
             <FlatList 
-            data={news} 
-            initialNumToRender={10}
-            extraData={news}
-            renderItem={({ item }) => <NewsItem news={item}/>}
-            keyExtractor={(news) => news.url}
-            refreshControl={<RefreshControl 
-                refreshing={isRefreshing}
-                onRefresh={onRefresh}
-                tintColor="#0034c2"
-                colors={['#0034c2']}
-                progressBackgroundColor="#fff"
-            />}
+                data={data.news} 
+                initialNumToRender={10}
+                extraData={data.news}
+                renderItem={({ item }) => <NewsItem news={item}/>}
+                keyExtractor={(news) => `${news.url}_${news.publishedAt}`}
+                refreshControl={<RefreshControl 
+                    refreshing={data.isRefreshing}
+                    onRefresh={data.onRefresh}
+                    tintColor="#0034c2"
+                    colors={['#0034c2']}
+                    progressBackgroundColor="#fff"
+                />}
+                ListFooterComponent={<Button title={data.loading ? 'Getting more news...' : 'Show More'} disabled={data.loading} onPress={data.fetchMoreNews}/>}
             />
-        )}
-        </SafeAreaView>
+        </NewsList>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f6f6f6',
-        justifyContent: 'center'
-    }
-});
 
 export default React.memo(AllNews);

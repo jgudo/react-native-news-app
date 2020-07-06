@@ -2,7 +2,11 @@ import { NEWS_API } from 'react-native-dotenv';
 
 const setURLParams = (url, params = {}) => {
     const newURL = new URL(url);
-    const combinedParams = { apiKey: NEWS_API, ...params };
+    const combinedParams = { 
+        apiKey: (NEWS_API || '16d923d6e2fd4ef48860cab9bc42dea3'), 
+        page: 1,
+        ...params 
+    };
     Object.keys(combinedParams).forEach(key => newURL.searchParams.append(key, combinedParams[key]));
 
     return newURL;
