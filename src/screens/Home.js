@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: 'Newsmaryosep',
+      title: '😒 Newsmaryosep',
       headerRight: () => (
         <HeaderButtonIcon>
           <Item title="about" iconName="md-information-circle-outline" onPress={() => navigation.navigate('About')} />
@@ -51,15 +51,15 @@ const Home = ({ navigation }) => {
         renderScene={({ route, jumpTo }) => {
           switch (route.key) {
             case 'top':
-              return <TopHeadline jumpto={jumpTo} />
+              return <TopHeadline jumpTo={jumpTo} />
             case 'all':
-              return <AllNews jumpto={jumpTo} />
+              return <AllNews jumpTo={jumpTo} />
             default:
-              return <TopHeadline jumpto={jumpTo} />
+              return <TopHeadline jumpTo={jumpTo} />
           }
         }}
         lazy={true}
-        onIndexChange={setIndex}
+        onIndexChange={(i) => setIndex(i)}
         initialLayout={initialLayout}
         onRequestChangeTab={handleIndexChange}
         renderTabBar={props => (
@@ -68,7 +68,7 @@ const Home = ({ navigation }) => {
             renderLabel={tabBarRender}
             getLabelText={({route: {title}}) => title}
             indicatorStyle={{ backgroundColor: '#ffa500' }}
-            // style={{ backgroundColor: '#fff' }}
+            style={{ backgroundColor: '#fff' }}
           />
         )}
       />

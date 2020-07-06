@@ -5,35 +5,39 @@ const useNewsData = (endpoint, params) => {
     const [news, setNews] = useState([]);
     const [isRefreshing, setRefreshing] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
 
     useEffect(() => {
         if (news.length === 0) {
-            setLoading(true);
             fetchNews();
         }   
     }, []);
 
     const fetchNews = async() => {
+        setLoading(true);
+        setError('');
         let data = null;
+
         try {
             switch (endpoint) {
                 case 'top-headlines':
                     data = await fetchTopHeadlines(params);
-                    setNews(data.articles);
                     break;
                 case 'all':
                     data = await fetchAllNews(params);
-                    setNews(data.articles);
                     break;
                 default:
                     throw new Error('Unexpected endpoint entry');
             }
         } catch (e) {
-            console.log(e);
+            setError(e.message);
+            console.dir(e);
         }
         
         console.log(data);
+        setNews(data.articles);
         setLoading(false);
+        setRefreshing(false);
     };
 
     const onRefresh = () => {
@@ -41,7 +45,7 @@ const useNewsData = (endpoint, params) => {
         fetchNews();
     }
 
-    return { news, loading, setLoading, onRefresh, isRefreshing}
+    return { news, loading, setLoading, onRefresh, isRefreshing, error, fetchNews}
 };
 
 export default useNewsData;

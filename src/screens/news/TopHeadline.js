@@ -1,16 +1,26 @@
 import React from 'react';
-import { FlatList, StyleSheet, RefreshControl, ActivityIndicator } from 'react-native';
+import { FlatList, StyleSheet, RefreshControl, ActivityIndicator, View, Text, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useNewsData from '../../hooks/useNewsData';
 import NewsItem from './NewsItem';
+import Error from '../../components/Error';
 
 const News = () => {
-    const { news, loading, onRefresh, isRefreshing } = useNewsData('top-headlines', { country: 'ph' });
+    const { 
+        news, 
+        loading, 
+        onRefresh, 
+        isRefreshing, 
+        error, 
+        fetchNews
+    } = useNewsData('top-headlines', { country: 'ph' });
 
     return (
         <SafeAreaView style={styles.container}>
-            {loading ? (
+            {loading && !isRefreshing ? (
                 <ActivityIndicator size="large" color="#0034c2" />
+            ) : error ? (
+                <Error onRefresh={fetchNews} error={error} />
             ) : (
                 <FlatList 
                 data={news} 
