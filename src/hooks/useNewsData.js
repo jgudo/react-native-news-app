@@ -35,7 +35,7 @@ const useNewsData = (endpoint, params) => {
             console.dir(e);
         }
 
-        if (data.articles) {
+        if (data) {
             console.log(data);
             setNews([...news, ...data.articles]);
         }

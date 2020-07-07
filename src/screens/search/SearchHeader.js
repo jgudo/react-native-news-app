@@ -2,10 +2,8 @@ import React from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { AntDesign } from '@expo/vector-icons'; 
 
-const SearchHeader = ({ navigation, setValue }) => {
-    const onSubmit = (e) => {
-        console.log(e.target.value);
-    };
+const SearchHeader = ({ navigation, onSubmitSearch, setValue }) => {
+    const onSubmit = () => onSubmitSearch();
 
     return (
         <View style={styles.container}>
@@ -19,6 +17,7 @@ const SearchHeader = ({ navigation, setValue }) => {
             <TextInput
                 textContentType='name'
                 style={styles.searchInput}
+                autoFocus
                 underlineColorAndroid="#fff"
                 onSubmitEditing={onSubmit}
                 placeholder='Search...'
