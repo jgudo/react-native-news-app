@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
         paddingLeft: 5
     },
     searchInput: {
-        backgroundColor: '#2450c6',
+        // backgroundColor: '#2450c6',
         padding: 10,
         flexGrow: 1,
         color: '#fff'

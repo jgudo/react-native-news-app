@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const NewsItem = ({ news }) => {
+    const navigation = useNavigation();
+
     return (
-        <TouchableOpacity onPress={() => alert('fgfdg')}>
+        <TouchableOpacity onPress={() => navigation.navigate('ViewArticle', { uri: news.url })}>
             <View style={styles.container}>
                 <View style={styles.titleContainer}>
                     <Text numberOfLines={3} style={styles.title}>{news.title}</Text>

@@ -23,7 +23,7 @@ const Home = ({ navigation }) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      title: '😒 Newsmaryosep',
+      title: 'Newsmaryosep',
       headerRight: () => (
         <HeaderButtonIcon>
           <Item title="about" iconName="md-information-circle-outline" onPress={() => navigation.navigate('About')} />
@@ -38,6 +38,7 @@ const Home = ({ navigation }) => {
       color: '#0034c2', 
       fontWeight: focused ? 'bold' : 'normal',
       opacity: focused ? 1 : 0.5,
+      fontSize: 14,
       margin: 8,
       
     }}>

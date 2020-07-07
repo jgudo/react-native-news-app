@@ -7,8 +7,6 @@ import NewsItem from './NewsItem';
 const AllNews = () => {
     const data = useNewsData('all', { q: 'covid' });
 
-    useEffect(() => console.log('ALL', data),[])
-
     return (
         <NewsList {...data}>
             <FlatList 
