@@ -26,8 +26,12 @@ const Home = ({ navigation }) => {
       title: 'Newsmaryosep',
       headerRight: () => (
         <HeaderButtonIcon>
-          <Item title="about" iconName="md-information-circle-outline" onPress={() => navigation.navigate('About')} />
           <Item title="search" iconName="md-search" onPress={() => navigation.navigate('Search')} />
+        </HeaderButtonIcon>
+      ),
+      headerLeft: () => (
+        <HeaderButtonIcon>
+          <Item title="about" iconName="md-information-circle-outline" onPress={() => navigation.navigate('About')} />
         </HeaderButtonIcon>
       )
     })

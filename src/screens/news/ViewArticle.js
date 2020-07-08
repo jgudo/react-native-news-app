@@ -1,6 +1,6 @@
 import React from 'react';
 import { WebView } from 'react-native-webview';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, ActivityIndicator, StyleSheet, Text } from 'react-native';
 
 const ViewArticle = ({ route }) => {
     const { uri } = route.params;
@@ -12,6 +12,7 @@ const ViewArticle = ({ route }) => {
                 source={{ uri: uri || 'https://reactnative.dev/' }}
                 renderLoading={() => <ActivityIndicator size="large" color="#0034c2" style={styles.loader}/>}
                 startInLoadingState 
+                renderError={() => <Text>Failed to load page.</Text>}
             />
         </View>
     );

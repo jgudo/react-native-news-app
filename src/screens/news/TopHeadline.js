@@ -22,14 +22,12 @@ const News = () => {
                     colors={['#0034c2']}
                     progressBackgroundColor="#fff"
                 />}
-                ListFooterComponent={(
-                    <Button 
-                        title={data.loading ? 'Getting more news...' : 'Show More'} 
-                        style={{ backgroundColor: '#ffa500' }}
-                        disabled={data.loading} 
-                        onPress={data.fetchMoreNews}
-                    />
-                )}
+                ListFooterComponent={<Button 
+                    title={data.loading ? 'Getting more news...' : 'Show More'} 
+                    style={{ backgroundColor: '#ffa500', padding: 20 }}
+                    disabled={data.loading} 
+                    onPress={data.fetchMoreNews}
+                />}
             />
         </NewsList>
     );
